@@ -102,7 +102,9 @@ if (isset($_POST['complete_test_run']) && wp_verify_nonce($_POST['journey_testin
             $step_result = isset($existing_results[$step['id']]) ? $existing_results[$step['id']] : null;
             $result_status = $step_result ? $step_result->result : '';
         ?>
-            <div class="test-step <?php echo $result_status ? 'has-result result-' . $result_status : ''; ?>" data-step-id="<?php echo $step['id']; ?>">
+            <div class="test-step <?php echo $result_status ? 'has-result result-' . $result_status : ''; ?>" 
+                 data-step-id="<?php echo $step['id']; ?>"
+                 <?php echo $step_result ? 'data-result-id="' . $step_result->id . '"' : ''; ?>>
                 <div class="step-header">
                     <div class="step-number"><?php echo $index + 1; ?></div>
                     <div class="step-title">
@@ -321,6 +323,9 @@ jQuery(document).ready(function($) {
                 // Update progress
                 updateProgress(response.data.progress);
                 
+                // Store result ID for attachments
+                $step.data('result-id', response.data.result_id);
+                
                 // Update step status
                 $step.removeClass('result-pass result-fail result-blocked result-skipped')
                      .addClass('has-result result-' + result);
@@ -360,32 +365,75 @@ jQuery(document).ready(function($) {
         var file = this.files[0];
         
         if (file) {
-            var formData = new FormData();
-            formData.append('action', 'journey_upload_attachment');
-            formData.append('nonce', journey_testing_ajax.nonce);
-            formData.append('file', file);
-            formData.append('object_type', 'test_step');
-            formData.append('object_id', stepId);
+            // First, ensure we have a test result for this step
+            var $step = $('.test-step[data-step-id="' + stepId + '"]');
+            var $activeButton = $step.find('.result-button.active');
             
-            $.ajax({
-                url: journey_testing_ajax.ajax_url,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
+            if (!$activeButton.length) {
+                alert('<?php _e('Please select a test result before uploading attachments.', 'journey-testing'); ?>');
+                return;
+            }
+            
+            // Get the test result ID from the step
+            var resultId = $step.data('result-id');
+            
+            // If no result ID yet, we need to save the result first
+            if (!resultId) {
+                // Save the current result first
+                $.post(journey_testing_ajax.ajax_url, {
+                    action: 'journey_save_test_result',
+                    nonce: journey_testing_ajax.nonce,
+                    test_run_id: testRunId,
+                    test_step_id: stepId,
+                    result: $activeButton.data('result'),
+                    notes: $step.find('.step-notes-field').val()
+                }, function(response) {
                     if (response.success) {
-                        var html = '<div class="attachment-item">' +
-                                  '<a href="' + response.data.file_url + '" target="_blank">' +
-                                  response.data.file_name + '</a></div>';
-                        $('.attachments-list[data-step-id="' + stepId + '"]').append(html);
-                    } else {
-                        alert(response.data);
+                        $step.data('result-id', response.data.result_id);
+                        uploadFile(file, response.data.result_id, stepId);
                     }
-                }
-            });
+                });
+            } else {
+                uploadFile(file, resultId, stepId);
+            }
         }
     });
+    
+    function uploadFile(file, resultId, stepId) {
+        var formData = new FormData();
+        formData.append('action', 'journey_upload_attachment');
+        formData.append('nonce', journey_testing_ajax.nonce);
+        formData.append('file', file);
+        formData.append('object_type', 'test_result');
+        formData.append('object_id', resultId);
+        
+        // Show uploading message
+        var $attachmentsList = $('.attachments-list[data-step-id="' + stepId + '"]');
+        $attachmentsList.append('<div class="uploading"><?php _e('Uploading...', 'journey-testing'); ?></div>');
+        
+        $.ajax({
+            url: journey_testing_ajax.ajax_url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                $('.uploading').remove();
+                if (response.success) {
+                    var html = '<div class="attachment-item">' +
+                              '<a href="' + response.data.file_url + '" target="_blank">' +
+                              response.data.file_name + '</a></div>';
+                    $attachmentsList.append(html);
+                } else {
+                    alert(response.data);
+                }
+            },
+            error: function() {
+                $('.uploading').remove();
+                alert('<?php _e('Upload failed. Please try again.', 'journey-testing'); ?>');
+            }
+        });
+    }
     
     // Issue modal
     $('.open-issue-form').on('click', function() {

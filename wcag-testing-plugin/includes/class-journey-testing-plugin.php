@@ -78,6 +78,10 @@ class Journey_Testing_Plugin {
         $this->loader->add_action('wp_ajax_journey_upload_attachment', $plugin_admin, 'ajax_upload_attachment');
         $this->loader->add_action('wp_ajax_journey_get_test_steps', $plugin_admin, 'ajax_get_test_steps');
         $this->loader->add_action('wp_ajax_journey_complete_test_run', $plugin_admin, 'ajax_complete_test_run');
+        $this->loader->add_action('wp_ajax_journey_save_test_step', $plugin_admin, 'ajax_save_test_step');
+        $this->loader->add_action('wp_ajax_journey_delete_test_step', $plugin_admin, 'ajax_delete_test_step');
+        $this->loader->add_action('wp_ajax_journey_reorder_steps', $plugin_admin, 'ajax_reorder_steps');
+        $this->loader->add_action('wp_ajax_journey_duplicate', $plugin_admin, 'ajax_duplicate_journey');
     }
     
     /**

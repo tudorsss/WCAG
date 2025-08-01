@@ -411,4 +411,118 @@ class Journey_Testing_Admin {
             wp_send_json_error(__('Failed to upload file', 'journey-testing'));
         }
     }
+    
+    /**
+     * AJAX handler for saving test steps
+     */
+    public function ajax_save_test_step() {
+        check_ajax_referer('journey_testing_ajax', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'journey-testing'));
+        }
+        
+        $step_id = isset($_POST['step_id']) && $_POST['step_id'] ? intval($_POST['step_id']) : 0;
+        $data = array(
+            'journey_id' => intval($_POST['journey_id']),
+            'title' => sanitize_text_field($_POST['title']),
+            'description' => sanitize_textarea_field($_POST['description']),
+            'expected_result' => sanitize_textarea_field($_POST['expected_result']),
+            'is_required' => intval($_POST['is_required'])
+        );
+        
+        if ($step_id) {
+            // Update existing step
+            Journey_Testing_Test_Step::update($step_id, $data);
+            wp_send_json_success(array('message' => __('Test step updated successfully', 'journey-testing')));
+        } else {
+            // Create new step
+            $new_id = Journey_Testing_Test_Step::create($data);
+            wp_send_json_success(array(
+                'message' => __('Test step created successfully', 'journey-testing'),
+                'step_id' => $new_id
+            ));
+        }
+    }
+    
+    /**
+     * AJAX handler for deleting test steps
+     */
+    public function ajax_delete_test_step() {
+        check_ajax_referer('journey_testing_ajax', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'journey-testing'));
+        }
+        
+        $step_id = intval($_POST['step_id']);
+        
+        if (Journey_Testing_Test_Step::delete($step_id)) {
+            wp_send_json_success(array('message' => __('Test step deleted successfully', 'journey-testing')));
+        } else {
+            wp_send_json_error(__('Failed to delete test step', 'journey-testing'));
+        }
+    }
+    
+    /**
+     * AJAX handler for reordering test steps
+     */
+    public function ajax_reorder_steps() {
+        check_ajax_referer('journey_testing_ajax', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'journey-testing'));
+        }
+        
+        $journey_id = intval($_POST['journey_id']);
+        $step_ids = array_map('intval', $_POST['step_ids']);
+        
+        if (Journey_Testing_Test_Step::reorder($journey_id, $step_ids)) {
+            wp_send_json_success(array('message' => __('Steps reordered successfully', 'journey-testing')));
+        } else {
+            wp_send_json_error(__('Failed to reorder steps', 'journey-testing'));
+        }
+    }
+    
+    /**
+     * AJAX handler for duplicating a journey
+     */
+    public function ajax_duplicate_journey() {
+        check_ajax_referer('journey_testing_ajax', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'journey-testing'));
+        }
+        
+        $journey_id = intval($_POST['journey_id']);
+        $new_name = sanitize_text_field($_POST['new_name']);
+        
+        // Get original journey
+        $original = Journey_Testing_Journey::get($journey_id);
+        if (!$original) {
+            wp_send_json_error(__('Journey not found', 'journey-testing'));
+        }
+        
+        // Create new journey
+        $new_journey_id = Journey_Testing_Journey::create(array(
+            'platform_id' => $original['platform_id'],
+            'name' => $new_name,
+            'slug' => sanitize_title($new_name),
+            'description' => $original['description'],
+            'version' => '1.0.0',
+            'display_order' => $original['display_order'] + 1
+        ));
+        
+        if ($new_journey_id) {
+            // Duplicate test steps
+            Journey_Testing_Test_Step::duplicate_steps($journey_id, $new_journey_id);
+            
+            wp_send_json_success(array(
+                'message' => __('Journey duplicated successfully', 'journey-testing'),
+                'journey_id' => $new_journey_id
+            ));
+        } else {
+            wp_send_json_error(__('Failed to duplicate journey', 'journey-testing'));
+        }
+    }
 }
