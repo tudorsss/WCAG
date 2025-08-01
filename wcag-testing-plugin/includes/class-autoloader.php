@@ -28,6 +28,7 @@ class Journey_Testing_Autoloader {
         // Check in different directories
         $paths = array(
             JOURNEY_TESTING_PLUGIN_DIR . 'includes/',
+            JOURNEY_TESTING_PLUGIN_DIR . 'includes/models/',
             JOURNEY_TESTING_PLUGIN_DIR . 'admin/',
             JOURNEY_TESTING_PLUGIN_DIR . 'public/',
         );

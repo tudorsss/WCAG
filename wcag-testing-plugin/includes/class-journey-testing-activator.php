@@ -220,6 +220,10 @@ class Journey_Testing_Activator {
             $journey['platform_id'] = $web_platform_id;
             $journey['created_by'] = get_current_user_id();
             $wpdb->insert($journeys_table, $journey);
+            $journey_id = $wpdb->insert_id;
+            
+            // Add default test steps based on journey
+            self::create_default_test_steps($journey_id, $journey['slug']);
         }
         
         // Insert default journeys for App platform
@@ -248,6 +252,236 @@ class Journey_Testing_Activator {
             $journey['platform_id'] = $app_platform_id;
             $journey['created_by'] = get_current_user_id();
             $wpdb->insert($journeys_table, $journey);
+            $journey_id = $wpdb->insert_id;
+            
+            // Add default test steps based on journey
+            self::create_default_test_steps($journey_id, $journey['slug']);
+        }
+    }
+    
+    /**
+     * Create default test steps for a journey
+     */
+    private static function create_default_test_steps($journey_id, $journey_slug) {
+        global $wpdb;
+        $steps_table = $wpdb->prefix . 'journey_test_steps';
+        
+        $test_steps = array();
+        
+        switch ($journey_slug) {
+            case 'web-complete-purchase':
+            case 'app-complete-purchase':
+                $test_steps = array(
+                    array(
+                        'title' => 'Navigate to MyFestool Login',
+                        'description' => 'Go to the MyFestool login page',
+                        'expected_result' => 'Login page loads successfully with username and password fields'
+                    ),
+                    array(
+                        'title' => 'Login to MyFestool',
+                        'description' => 'Enter valid credentials and submit login form',
+                        'expected_result' => 'Successfully logged in and redirected to account dashboard'
+                    ),
+                    array(
+                        'title' => 'Search for Product',
+                        'description' => 'Use the search bar to search for a specific product',
+                        'expected_result' => 'Search results display relevant products'
+                    ),
+                    array(
+                        'title' => 'Add Product to Cart',
+                        'description' => 'Click "Add to Cart" button on a product',
+                        'expected_result' => 'Product is added to cart with confirmation message'
+                    ),
+                    array(
+                        'title' => 'Add Product to Wishlist',
+                        'description' => 'Click "Add to Wishlist" button on the same or different product',
+                        'expected_result' => 'Product is added to wishlist with confirmation'
+                    ),
+                    array(
+                        'title' => 'Open Shopping Cart',
+                        'description' => 'Navigate to the shopping cart page',
+                        'expected_result' => 'Cart page displays with added products'
+                    ),
+                    array(
+                        'title' => 'Add Products from Slider',
+                        'description' => 'Use Product Cards Slider to add additional products',
+                        'expected_result' => 'Additional products are successfully added to cart'
+                    ),
+                    array(
+                        'title' => 'Enter Promo Code',
+                        'description' => 'Enter a valid promotional code in the cart',
+                        'expected_result' => 'Promo code is applied and discount is reflected'
+                    ),
+                    array(
+                        'title' => 'Proceed to Checkout',
+                        'description' => 'Click checkout button and fill in required information',
+                        'expected_result' => 'Checkout process completes up to payment selection'
+                    )
+                );
+                break;
+                
+            case 'web-catalog-navigation':
+            case 'app-catalog-navigation':
+                $test_steps = array(
+                    array(
+                        'title' => 'Navigate to MyFestool Login',
+                        'description' => 'Go to the MyFestool login page',
+                        'expected_result' => 'Login page loads successfully'
+                    ),
+                    array(
+                        'title' => 'Login to MyFestool',
+                        'description' => 'Enter valid credentials and submit login form',
+                        'expected_result' => 'Successfully logged in'
+                    ),
+                    array(
+                        'title' => 'Open Catalog Navigation',
+                        'description' => 'Access the main product catalog menu',
+                        'expected_result' => 'Catalog categories are displayed'
+                    ),
+                    array(
+                        'title' => 'Browse Category',
+                        'description' => 'Select a product category to browse',
+                        'expected_result' => 'Products in selected category are displayed'
+                    ),
+                    array(
+                        'title' => 'Apply Filters',
+                        'description' => 'Use filters to narrow down product selection',
+                        'expected_result' => 'Product list updates based on applied filters'
+                    ),
+                    array(
+                        'title' => 'Select Product',
+                        'description' => 'Click on a product from the filtered results',
+                        'expected_result' => 'Product detail page opens'
+                    ),
+                    array(
+                        'title' => 'Add to Cart from Catalog',
+                        'description' => 'Add the selected product to cart',
+                        'expected_result' => 'Product is added to cart successfully'
+                    )
+                );
+                break;
+                
+            case 'web-dust-extractor':
+                $test_steps = array(
+                    array(
+                        'title' => 'Navigate to Dust Extractor Tool',
+                        'description' => 'Go to Anwendungsberater Saugen page',
+                        'expected_result' => 'Recommendation tool loads successfully'
+                    ),
+                    array(
+                        'title' => 'Select Application Type',
+                        'description' => 'Choose the type of application/work',
+                        'expected_result' => 'Next step or options are displayed'
+                    ),
+                    array(
+                        'title' => 'Specify Requirements',
+                        'description' => 'Enter specific requirements for dust extraction',
+                        'expected_result' => 'Form accepts input and shows relevant options'
+                    ),
+                    array(
+                        'title' => 'Review Recommendations',
+                        'description' => 'View the recommended dust extractors',
+                        'expected_result' => 'Appropriate products are recommended based on inputs'
+                    ),
+                    array(
+                        'title' => 'Compare Products',
+                        'description' => 'Use comparison feature for recommended products',
+                        'expected_result' => 'Comparison table displays with key features'
+                    ),
+                    array(
+                        'title' => 'Select Recommended Product',
+                        'description' => 'Choose one of the recommended products',
+                        'expected_result' => 'Product detail page opens for selected item'
+                    )
+                );
+                break;
+                
+            case 'web-product-info':
+                $test_steps = array(
+                    array(
+                        'title' => 'Navigate to Product',
+                        'description' => 'Go to a specific product detail page',
+                        'expected_result' => 'Product page loads with all information'
+                    ),
+                    array(
+                        'title' => 'Review Product Information',
+                        'description' => 'Check product specifications, features, and details',
+                        'expected_result' => 'All product information is displayed correctly'
+                    ),
+                    array(
+                        'title' => 'View Product Images',
+                        'description' => 'Browse through product image gallery',
+                        'expected_result' => 'Images load and can be viewed in detail'
+                    ),
+                    array(
+                        'title' => 'Check Technical Data',
+                        'description' => 'Review technical specifications tab',
+                        'expected_result' => 'Technical data is complete and accurate'
+                    ),
+                    array(
+                        'title' => 'Find Tutorial Section',
+                        'description' => 'Locate the tutorial/video section on the page',
+                        'expected_result' => 'Tutorial section is visible and accessible'
+                    ),
+                    array(
+                        'title' => 'Watch Tutorial Video',
+                        'description' => 'Play a tutorial video for the product',
+                        'expected_result' => 'Video plays successfully with good quality'
+                    )
+                );
+                break;
+                
+            case 'app-mytools':
+                $test_steps = array(
+                    array(
+                        'title' => 'Navigate to MyFestool Login',
+                        'description' => 'Go to the MyFestool login page in app',
+                        'expected_result' => 'Login page loads successfully'
+                    ),
+                    array(
+                        'title' => 'Login to MyFestool',
+                        'description' => 'Enter valid credentials and submit',
+                        'expected_result' => 'Successfully logged in to app'
+                    ),
+                    array(
+                        'title' => 'Navigate to MyTools',
+                        'description' => 'Access MyTools section from menu',
+                        'expected_result' => 'MyTools area opens with registered products'
+                    ),
+                    array(
+                        'title' => 'Select a Tool',
+                        'description' => 'Choose a registered tool from MyTools list',
+                        'expected_result' => 'Tool details page opens'
+                    ),
+                    array(
+                        'title' => 'View Tool Information',
+                        'description' => 'Review tool details and warranty information',
+                        'expected_result' => 'All tool information is displayed correctly'
+                    ),
+                    array(
+                        'title' => 'Access Tutorials',
+                        'description' => 'Find and open tutorial section for the tool',
+                        'expected_result' => 'Tutorial list is displayed'
+                    ),
+                    array(
+                        'title' => 'Watch Tutorial',
+                        'description' => 'Play a tutorial video from the list',
+                        'expected_result' => 'Video plays successfully in app'
+                    )
+                );
+                break;
+        }
+        
+        // Insert test steps
+        foreach ($test_steps as $order => $step) {
+            $wpdb->insert($steps_table, array(
+                'journey_id' => $journey_id,
+                'title' => $step['title'],
+                'description' => $step['description'],
+                'expected_result' => $step['expected_result'],
+                'step_order' => $order,
+                'is_required' => 1
+            ));
         }
     }
     
