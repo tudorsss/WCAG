@@ -1,0 +1,427 @@
+/**
+ * WCAG Testing Plugin - Admin Styles
+ */
+
+/* Dashboard Styles */
+.wcag-testing-dashboard .wcag-testing-welcome {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.wcag-testing-dashboard .wcag-testing-stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.wcag-testing-dashboard .stat-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.wcag-testing-dashboard .stat-box.critical {
+    border-color: #d63638;
+}
+
+.wcag-testing-dashboard .stat-box h3 {
+    margin: 0 0 10px 0;
+    color: #646970;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.wcag-testing-dashboard .stat-number {
+    font-size: 36px;
+    font-weight: 600;
+    color: #2271b1;
+}
+
+.wcag-testing-dashboard .stat-box.critical .stat-number {
+    color: #d63638;
+}
+
+.wcag-testing-dashboard .wcag-testing-actions {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.wcag-testing-dashboard .button-hero {
+    font-size: 16px;
+    padding: 8px 20px;
+    height: auto;
+}
+
+.wcag-testing-dashboard .button-hero .dashicons {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Level and Status Badges */
+.wcag-level {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.wcag-level-a {
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.wcag-level-aa {
+    background: #2271b1;
+    color: #fff;
+}
+
+.wcag-level-aaa {
+    background: #135e96;
+    color: #fff;
+}
+
+.wcag-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.wcag-status-draft {
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.wcag-status-final {
+    background: #00a32a;
+    color: #fff;
+}
+
+/* Result Badges */
+.wcag-result {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.wcag-result.passed {
+    color: #00a32a;
+}
+
+.wcag-result.failed {
+    color: #d63638;
+}
+
+.wcag-result.warning {
+    color: #dba617;
+}
+
+/* New Test Page */
+.wcag-testing-new-test .wcag-test-settings,
+.wcag-testing-new-test .wcag-test-criteria,
+.wcag-testing-new-test .wcag-test-summary {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.wcag-test-controls {
+    margin: 20px 0;
+}
+
+.wcag-test-controls .button {
+    margin-right: 10px;
+}
+
+/* Principles and Guidelines */
+.wcag-principle {
+    margin: 20px 0;
+}
+
+.wcag-principle h3 {
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+    color: #1d2327;
+}
+
+.wcag-guideline {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.wcag-guideline h4 {
+    margin: 0;
+}
+
+.toggle-guideline {
+    background: none;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle-guideline:hover {
+    background: #f0f0f1;
+}
+
+.toggle-guideline .dashicons {
+    transition: transform 0.2s;
+}
+
+.toggle-guideline[aria-expanded="true"] .dashicons {
+    transform: rotate(90deg);
+}
+
+/* Criteria */
+.wcag-criteria-list {
+    padding: 0 15px 15px;
+}
+
+.wcag-criterion {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.criterion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.criterion-header h5 {
+    margin: 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.new-badge {
+    font-size: 16px;
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.level-badge.level-A {
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.level-badge.level-AA {
+    background: #2271b1;
+    color: #fff;
+}
+
+.level-badge.level-AAA {
+    background: #135e96;
+    color: #fff;
+}
+
+/* Result Selection */
+.criterion-result {
+    display: flex;
+    gap: 15px;
+}
+
+.criterion-result label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.result-pass {
+    color: #00a32a;
+}
+
+.result-fail {
+    color: #d63638;
+}
+
+.result-warning {
+    color: #dba617;
+}
+
+.result-na {
+    color: #646970;
+}
+
+/* Criterion Details */
+.criterion-details {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dcdcde;
+}
+
+.criterion-tests {
+    margin: 15px 0;
+}
+
+.criterion-tests h6 {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.criterion-tests ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.criterion-tests li {
+    margin: 5px 0;
+}
+
+.criterion-notes {
+    margin: 15px 0;
+}
+
+.criterion-notes label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.criterion-issue {
+    background: #fef7f1;
+    border: 1px solid #f0b849;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 4px;
+}
+
+.criterion-issue h6 {
+    margin: 0 0 15px 0;
+    color: #996800;
+}
+
+.criterion-issue label {
+    display: block;
+    margin: 10px 0 5px 0;
+    font-weight: 600;
+}
+
+.criterion-issue input[type="text"],
+.criterion-issue textarea,
+.criterion-issue select {
+    width: 100%;
+}
+
+/* Test Summary */
+.summary-stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.summary-stats .stat {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    background: #f6f7f7;
+    border-radius: 4px;
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #646970;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.stat-value.passed {
+    color: #00a32a;
+}
+
+.stat-value.failed {
+    color: #d63638;
+}
+
+.stat-value.warning {
+    color: #dba617;
+}
+
+.stat-value.na {
+    color: #646970;
+}
+
+.test-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.test-actions .button {
+    margin: 0 5px;
+}
+
+/* Reports Page */
+.wcag-testing-reports .report-filters {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 15px;
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.wcag-testing-reports .export-actions {
+    margin: 20px 0;
+}
+
+/* Settings Page */
+.wcag-testing-settings .form-table th {
+    width: 200px;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .wcag-testing-dashboard .wcag-testing-stats,
+    .summary-stats {
+        flex-direction: column;
+    }
+    
+    .criterion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .criterion-result {
+        flex-wrap: wrap;
+    }
+}

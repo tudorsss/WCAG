@@ -1,0 +1,41 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build files
+/dist/
+/build/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+sitemap.xml
+*.log
+
+# Testing
+/tests/coverage/
+.phpunit.result.cache
+
+# Environment
+.env
+.env.*
+
+# Composer
+composer.lock
+
+# NPM
+package-lock.json
+yarn.lock
