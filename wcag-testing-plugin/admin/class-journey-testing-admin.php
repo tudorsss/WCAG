@@ -167,6 +167,25 @@ class Journey_Testing_Admin {
             'journey-testing-settings',
             array($this, 'display_settings_page')
         );
+        
+        // Hidden pages (not shown in menu)
+        add_submenu_page(
+            null, // parent slug null to hide from menu
+            __('Execute Test', 'journey-testing'),
+            __('Execute Test', 'journey-testing'),
+            'manage_options',
+            'journey-testing-execute',
+            array($this, 'display_execute_page')
+        );
+        
+        add_submenu_page(
+            null, // parent slug null to hide from menu
+            __('Test Report', 'journey-testing'),
+            __('Test Report', 'journey-testing'),
+            'manage_options',
+            'journey-testing-report',
+            array($this, 'display_report_page')
+        );
     }
     
     /**
@@ -224,6 +243,38 @@ class Journey_Testing_Admin {
      */
     public function display_settings_page() {
         include_once JOURNEY_TESTING_PLUGIN_DIR . 'admin/views/settings.php';
+    }
+    
+    /**
+     * Display the test execution page
+     */
+    public function display_execute_page() {
+        include_once JOURNEY_TESTING_PLUGIN_DIR . 'admin/views/execute.php';
+    }
+    
+    /**
+     * Display the test report page
+     */
+    public function display_report_page() {
+        include_once JOURNEY_TESTING_PLUGIN_DIR . 'admin/views/report.php';
+    }
+    
+    /**
+     * Get all journeys grouped by platform
+     */
+    public function get_all_journeys_grouped() {
+        $platforms = Journey_Testing_Platform::get_all();
+        $grouped = array();
+        
+        foreach ($platforms as $platform) {
+            $journeys = Journey_Testing_Journey::get_by_platform($platform['id']);
+            foreach ($journeys as &$journey) {
+                $journey['steps'] = Journey_Testing_Test_Step::get_by_journey($journey['id']);
+            }
+            $grouped[$platform['id']] = $journeys;
+        }
+        
+        return $grouped;
     }
     
     /**
