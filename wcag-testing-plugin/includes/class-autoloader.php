@@ -1,8 +1,8 @@
 <?php
 /**
- * Autoloader for WCAG Testing Plugin
+ * Autoloader for Journey Testing Plugin
  */
-class WCAG_Testing_Autoloader {
+class Journey_Testing_Autoloader {
     
     /**
      * Register the autoloader
@@ -18,7 +18,7 @@ class WCAG_Testing_Autoloader {
      */
     public static function autoload($class_name) {
         // Only autoload classes from this plugin
-        if (strpos($class_name, 'WCAG_Testing') !== 0) {
+        if (strpos($class_name, 'Journey_Testing') !== 0) {
             return;
         }
         
@@ -27,9 +27,10 @@ class WCAG_Testing_Autoloader {
         
         // Check in different directories
         $paths = array(
-            WCAG_TESTING_PLUGIN_DIR . 'includes/',
-            WCAG_TESTING_PLUGIN_DIR . 'admin/',
-            WCAG_TESTING_PLUGIN_DIR . 'public/',
+            JOURNEY_TESTING_PLUGIN_DIR . 'includes/',
+            JOURNEY_TESTING_PLUGIN_DIR . 'includes/models/',
+            JOURNEY_TESTING_PLUGIN_DIR . 'admin/',
+            JOURNEY_TESTING_PLUGIN_DIR . 'public/',
         );
         
         foreach ($paths as $path) {

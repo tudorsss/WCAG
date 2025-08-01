@@ -51,12 +51,7 @@
             }
             
             // Update summary
-            updateTestSummary();
-        });
-        
-        // Run automated tests
-        $('.run-automated').on('click', function() {
-            runAutomatedTests();
+            updateSummary();
         });
         
         // Form submission
@@ -66,13 +61,13 @@
         });
         
         // Initialize summary
-        updateTestSummary();
+        updateSummary();
     }
     
     /**
      * Update test summary
      */
-    function updateTestSummary() {
+    function updateSummary() {
         let passed = 0;
         let failed = 0;
         let warnings = 0;
@@ -100,49 +95,6 @@
         $('#summary-failed').text(failed);
         $('#summary-warnings').text(warnings);
         $('#summary-na').text(na);
-    }
-    
-    /**
-     * Run automated tests
-     */
-    function runAutomatedTests() {
-        const $button = $('.run-automated');
-        const originalText = $button.text();
-        const url = $('#test-url').val();
-        
-        if (!url) {
-            alert(wcag_testing_ajax.strings.error);
-            return;
-        }
-        
-        $button.prop('disabled', true).text(wcag_testing_ajax.strings.testing);
-        
-        // Simulate automated tests for demo
-        // In a real implementation, this would call external accessibility testing APIs
-        const automatedTests = [
-            { criterion: '1.1.1', result: 'pass' },
-            { criterion: '1.3.1', result: 'warning' },
-            { criterion: '1.4.3', result: 'fail' },
-            { criterion: '2.1.1', result: 'pass' },
-            { criterion: '2.4.1', result: 'pass' },
-            { criterion: '3.1.1', result: 'pass' },
-            { criterion: '4.1.2', result: 'warning' }
-        ];
-        
-        // Apply results
-        setTimeout(function() {
-            automatedTests.forEach(function(test) {
-                const $radio = $(`input[name="result_${test.criterion}"][value="${test.result}"]`);
-                if ($radio.length) {
-                    $radio.prop('checked', true).trigger('change');
-                }
-            });
-            
-            $button.prop('disabled', false).text(originalText);
-            
-            // Show notification
-            showNotification('Automated tests completed. Please review and complete manual tests.', 'success');
-        }, 2000);
     }
     
     /**

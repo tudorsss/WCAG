@@ -50,6 +50,10 @@ if (!defined('ABSPATH')) {
                     </td>
                 </tr>
             </table>
+            
+            <div class="test-actions">
+                <button type="submit" class="button button-primary"><?php _e('Start Testing', 'wcag-testing'); ?></button>
+            </div>
         </div>
         
         <div class="wcag-test-criteria">
@@ -59,7 +63,6 @@ if (!defined('ABSPATH')) {
             <div class="wcag-test-controls">
                 <button type="button" class="button expand-all"><?php _e('Expand All', 'wcag-testing'); ?></button>
                 <button type="button" class="button collapse-all"><?php _e('Collapse All', 'wcag-testing'); ?></button>
-                <button type="button" class="button run-automated"><?php _e('Run Automated Tests', 'wcag-testing'); ?></button>
             </div>
             
             <?php foreach ($criteria as $principle_key => $principle): ?>

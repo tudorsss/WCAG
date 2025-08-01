@@ -1,152 +1,165 @@
-# WCAG 2.2 Testing Suite for WordPress
+# User Journey Testing Suite for Festool
 
-A comprehensive WordPress plugin for testing websites against WCAG 2.2 accessibility standards. This plugin provides a complete testing framework with all success criteria, including the 9 new criteria introduced in WCAG 2.2.
+A comprehensive WordPress plugin for managing and executing user journey tests across Festool's web and app platforms. This plugin provides a complete testing framework for tracking test execution, documenting issues, and managing test versions across multiple testers.
 
 ## Features
 
-### 🎯 Complete WCAG 2.2 Coverage
-- All success criteria from Level A, AA, and AAA
-- Special highlighting for the 9 new WCAG 2.2 criteria
-- Organized by the four WCAG principles: Perceivable, Operable, Understandable, and Robust
+### 🎯 Platform-Based Organization
+- Separate test suites for Web and App platforms
+- Organized user journeys for each platform
+- Reusable test steps across journeys
 
-### 🆕 New WCAG 2.2 Criteria Included
-1. **2.4.11 Focus Not Obscured (Minimum)** - Level AA
-2. **2.4.12 Focus Not Obscured (Enhanced)** - Level AAA
-3. **2.4.13 Focus Appearance** - Level AAA
-4. **2.5.7 Dragging Movements** - Level AA
-5. **2.5.8 Target Size (Minimum)** - Level AA
-6. **3.2.6 Consistent Help** - Level A
-7. **3.3.7 Redundant Entry** - Level A
-8. **3.3.8 Accessible Authentication (Minimum)** - Level AA
-9. **3.3.9 Accessible Authentication (Enhanced)** - Level AAA
+### 📊 User Journey Coverage
 
-### 📊 Testing Features
-- **Manual Testing Checklist**: Work through each criterion with detailed test steps
-- **Automated Test Integration**: Run basic automated checks (extensible)
-- **Issue Tracking**: Document failures with severity levels, descriptions, and recommendations
-- **Progress Tracking**: Real-time summary of passed, failed, and warning states
+#### Web Platform Journeys
+1. **Complete Purchase Flow**
+   - MyFestool Login
+   - Search product (via search bar)
+   - Add to cart & wishlist
+   - Cart management with Product Cards Slider
+   - Promo code application
+   - Checkout process
 
-### 📈 Reporting & Export
-- Save draft and final reports
-- Export reports in multiple formats (CSV, JSON, PDF-ready)
-- Historical report tracking
-- Issue management system
+2. **Catalog Navigation Flow**
+   - MyFestool Login
+   - Browse via catalog navigation
+   - Product selection and cart management
 
-### 🛠️ Admin Features
-- Comprehensive dashboard with statistics
-- Configurable default conformance level
-- Optional front-end testing toolbar for admins
-- Email notifications for critical issues
+3. **Dust Extractor Recommendation**
+   - Navigate to Anwendungsberater Saugen
+   - Complete recommendation flow
+
+4. **Product Information Flow**
+   - Product detail page exploration
+   - Tutorial viewing
+
+#### App Platform Journeys
+1. **Complete Purchase Flow**
+   - MyFestool Login
+   - Search product (via search bar)
+   - Add to cart & wishlist
+   - Cart management
+   - Checkout process
+
+2. **Catalog Navigation Flow**
+   - MyFestool Login
+   - Browse via catalog navigation
+   - Product selection
+
+3. **MyTools Flow**
+   - Navigate to MyTools area
+   - Open product information
+   - Watch tutorials
+
+### 📈 Testing Features
+- **Manual Testing Checklists**: Step-by-step test execution
+- **Execution Status Tracking**: Pass/Fail/Blocked/Skipped for each step
+- **Issue Documentation**: Detailed failure documentation with severity levels
+- **File Attachments**: Screenshots, videos, and documents for test evidence
+- **Progress Tracking**: Real-time overview of testing progress per journey
+
+### 👥 Team Features
+- **Multiple Testers**: Assign different journeys to team members
+- **Test Versioning**: Track changes to test cases over time
+- **Test History**: View and compare previous test runs
+
+### 📊 Reporting & Analytics
+- **Journey-Level Reports**: Detailed results for each user journey
+- **Platform Overview**: Aggregate results by platform
+- **Export Capabilities**: Export test results in multiple formats
+- **Historical Tracking**: Compare test runs over time
 
 ## Installation
 
 1. Download the plugin files
-2. Upload to `/wp-content/plugins/wcag-testing-plugin/`
+2. Upload to `/wp-content/plugins/user-journey-testing/`
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Navigate to the 'WCAG Testing' menu in your WordPress admin
+4. Navigate to the 'Journey Testing' menu in your WordPress admin
 
 ## Usage
 
-### Starting a New Test
+### Starting a New Test Run
 
-1. Go to **WCAG Testing → New Test**
-2. Enter the URL you want to test
-3. Select your target conformance level (A, AA, or AAA)
-4. Work through each guideline and criterion:
-   - Mark each as Pass, Fail, Warning, or N/A
-   - For failures, document the issue details
-   - Add notes for future reference
+1. Go to **Journey Testing → New Test Run**
+2. Select the platform (Web or App)
+3. Choose the journey to test
+4. Assign a tester
+5. Begin executing test steps
 
-### Using the Testing Checklist
+### Executing Tests
 
-Each criterion includes:
-- **Description**: What the criterion requires
-- **Test Steps**: Specific things to check
-- **Result Options**: Pass, Fail, Warning, or Not Applicable
-- **Issue Documentation**: For failures, record:
-  - Element/location
-  - Description of the issue
-  - Recommended fix
-  - Severity level
+For each test step:
+- Review the step description and expected outcome
+- Execute the step manually
+- Record the result (Pass/Fail/Blocked/Skipped)
+- For failures:
+  - Document the issue
+  - Add screenshots or videos
+  - Specify severity
+  - Add recommendations
 
-### Automated Testing
+### Managing Test Journeys
 
-Click "Run Automated Tests" to perform basic automated checks. This currently includes:
-- Basic HTML validation
-- Color contrast checking (planned)
-- Alt text detection (planned)
-- Heading structure analysis (planned)
-
-Note: Automated testing can only catch about 30% of accessibility issues. Manual testing is essential.
+1. Go to **Journey Testing → Manage Journeys**
+2. Create or edit journeys for each platform
+3. Define test steps (reusable across journeys)
+4. Set version numbers for tracking changes
 
 ### Viewing Reports
 
-1. Go to **WCAG Testing → Reports**
-2. View summary statistics for each report
-3. Click on a report to see detailed results
-4. Export reports in various formats
+1. Go to **Journey Testing → Reports**
+2. Filter by platform, journey, date range, or tester
+3. View detailed results for each test run
+4. Export reports for stakeholder review
 
-## Testing Methodology
+## Test Organization Structure
 
-### Recommended Testing Process
-
-1. **Automated Scan First**: Run automated tests to catch obvious issues
-2. **Keyboard Navigation**: Test all functionality using only keyboard
-3. **Screen Reader Testing**: Use NVDA, JAWS, or VoiceOver
-4. **Visual Inspection**: Check color contrast, text sizing, focus indicators
-5. **Interactive Testing**: Test forms, modals, and dynamic content
-
-### Essential Testing Tools
-
-- **Keyboard**: Tab, Shift+Tab, Enter, Space, Arrow keys
-- **Screen Readers**: NVDA (free), JAWS, VoiceOver
-- **Browser Tools**: Chrome DevTools, Firefox Accessibility Inspector
-- **Color Contrast**: Colour Contrast Analyser
-- **Mobile Testing**: Real devices for touch interaction testing
-
-## Configuration
-
-### Settings
-
-Navigate to **WCAG Testing → Settings** to configure:
-
-- **Default Conformance Level**: Set default to A, AA, or AAA
-- **Enable Toolbar**: Show testing toolbar on front-end (admin only)
-- **Auto-save**: Automatically save progress during testing
-- **Email Notifications**: Get notified of critical issues
-
-## Development
-
-### Extending the Plugin
-
-The plugin is built with extensibility in mind:
-
-```php
-// Add custom automated tests
-add_filter('wcag_testing_automated_tests', function($tests) {
-    $tests['custom_test'] = array(
-        'name' => 'My Custom Test',
-        'callback' => 'my_custom_test_function'
-    );
-    return $tests;
-});
 ```
-
-### Database Structure
-
-The plugin creates two tables:
-- `wp_wcag_reports`: Stores test reports
-- `wp_wcag_issues`: Stores individual issues
+Platform (Web/App)
+└── Journey (e.g., Complete Purchase Flow)
+    └── Test Steps (e.g., MyFestool Login)
+        └── Test Execution
+            ├── Result (Pass/Fail/Blocked/Skipped)
+            ├── Issues (if failed)
+            └── Attachments
+```
 
 ## Requirements
 
 - WordPress 5.0 or higher
 - PHP 7.2 or higher
 - Modern browser for testing interface
+- Sufficient storage for file attachments
+
+## Development
+
+### Database Structure
+
+The plugin creates the following tables:
+- `wp_journey_platforms`: Stores platform definitions
+- `wp_journey_definitions`: Stores user journey templates
+- `wp_journey_test_steps`: Stores reusable test step definitions
+- `wp_journey_test_runs`: Stores test execution instances
+- `wp_journey_test_results`: Stores individual step results
+- `wp_journey_issues`: Stores documented issues
+- `wp_journey_attachments`: Stores file attachment metadata
+
+### Extending the Plugin
+
+```php
+// Add custom test step types
+add_filter('journey_testing_step_types', function($types) {
+    $types['custom_type'] = array(
+        'name' => 'Custom Step Type',
+        'icon' => 'dashicons-admin-generic'
+    );
+    return $types;
+});
+```
 
 ## Support
 
-For issues, feature requests, or contributions, please visit the [GitHub repository](https://github.com/yourdomain/wcag-testing-plugin).
+For issues, feature requests, or contributions, please contact the BetterQA team.
 
 ## License
 
@@ -154,14 +167,16 @@ This plugin is licensed under the GPL v2 or later.
 
 ## Credits
 
-Developed for Festool GmbH accessibility testing needs by the BetterQA team.
+Developed specifically for Festool GmbH by the BetterQA team to streamline user journey testing across web and app platforms.
 
 ## Changelog
 
+### Version 2.0.0
+- Complete rewrite from WCAG testing to User Journey testing
+- Platform-based test organization
+- Support for multiple testers and test versioning
+- File attachment capabilities
+- Comprehensive reporting system
+
 ### Version 1.0.0
-- Initial release
-- Complete WCAG 2.2 criteria implementation
-- Manual testing interface
-- Basic automated testing framework
-- Report generation and export
-- Issue tracking system
+- Initial release as WCAG testing tool
